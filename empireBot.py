@@ -109,10 +109,8 @@ async def getpaymenttoken(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Your payment token is:")
     await update.message.reply_text(token)
     for admin_id in admins:
-        await context.bot.send_message(chat_id=admin_id, text="User with User ID")
-        await context.bot.send_message(chat_id=admin_id, text=update.effective_user.id)
-        await context.bot.send_message(chat_id=admin_id, text="has generated a payment token:")
-        await context.bot.send_message(chat_id=admin_id, text=token)
+        count, UserId = await count_user_accounts('empirexch', user_id=update.effective_user.id, date=context.args[0] if len(context.args) > 0 else None)
+        await context.bot.send_message(chat_id=admin_id, text=f"User with User ID : {update.effective_user.id} has generated a payment token: {token} \n Total registrations: {count}\n from user ID: {UserId}")
     
 async def match(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if len(context.args) == 2:
